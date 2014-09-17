@@ -1,7 +1,6 @@
 import sys
 
 from datetime import datetime
-startTime = datetime.now()
 
 # Returns a boolean indicating whether the two strings
 # a and b are within thresh steps of each other
@@ -18,7 +17,7 @@ def isClose(a, b, thresh):
     # Initializes the two dimensional array where the work is done
     D = [[0 for x in range(magB+1)]for x in range(2)]
 
-    # To turn an empty string into one of len(j) requires j edits
+    # To turn an empty string into one of length j requires j edits
     for j in range(1, magB+1):
         D[0][j] = j
 
@@ -53,39 +52,61 @@ def isClose(a, b, thresh):
 
     return D[0][magB] <= thresh
 
-# Arrays to contain the resulting friend network
-tier1 = []
-tier2 = []
-tier3 = []
 
-# User input word to create a network for
-a = sys.argv[1]
+def extract(inList, exclude):
+    out = []
+    for word in inList:
+        if word not in exclude:
+            for a in exclude:
+                if word not in out and isClose(a, word, 1):
+                    out.append(word)
+    return out
 
-# Array to hold candidates for being added to the network
-cands = []
-with open('randomlist.txt', 'r') as f:
-    for word in f:
-        word = word.strip()
-        if isClose(a, word, 3):
-            cands.append(word)
-    
-for word in cands:
-    if isClose(a, word, 1):
-        tier1.append(word)
 
-for word in cands:
-    if word not in tier1:
-        for a in tier1:
-            if isClose(a, word, 1):
-                tier2.append(word)
+#for word in cands:
+#    if isClose(a, word, 1):
+#        tier1.append(word)
+#
+#for word in cands:
+#    if word not in tier1:
+#        for a in tier1:
+#            if isClose(a, word, 1):
+#                tier2.append(word)
+#
+#for word in cands:
+#    if word not in tier2 and word not in tier1:
+#        for a in tier2:
+#            if word not in tier3 and isClose(a, word, 1):
+#                tier3.append(word)
 
-for word in cands:
-    if word not in tier2 and word not in tier1:
-        for a in tier2:
-            if isClose(a, word, 1):
-                tier3.append(word)
+if __name__ == "__main__":
+    startTime = datetime.now()
+    # Array to contain the resulting friend network
+    tiers = [[] for x in range(3)]
 
-print datetime.now() - startTime
-print "TIER1: ", tier1
-print "TIER2: ", tier2
-print "TIER3: ", tier3
+    # User input word to create a network for
+    a = sys.argv[1]
+
+    # Array to hold candidates for being added to the network
+    cands = []
+
+    # Reads in contents of wordlist and determines candidates
+    with open('randomlist.txt', 'r') as f:
+        for word in f:
+            word = word.strip()
+            if isClose(a, word, 3):
+                cands.append(word)
+
+    # Extracts the tiers from the possible candidates
+    tiers[0] = extract(cands, [a])
+    tiers[1] = extract(cands, tiers[0])
+    tiers[2] = extract(cands, tiers[1])
+
+    # Outputs running time
+    print datetime.now() - startTime
+
+    # Displays results
+    print "INPUT: ", a
+    print "TIER1: ", tiers[0]
+    print "TIER2: ", tiers[1]
+    print "TIER3: ", tiers[2]
