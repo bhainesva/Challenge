@@ -62,23 +62,6 @@ def extract(inList, exclude):
                     out.append(word)
     return out
 
-
-#for word in cands:
-#    if isClose(a, word, 1):
-#        tier1.append(word)
-#
-#for word in cands:
-#    if word not in tier1:
-#        for a in tier1:
-#            if isClose(a, word, 1):
-#                tier2.append(word)
-#
-#for word in cands:
-#    if word not in tier2 and word not in tier1:
-#        for a in tier2:
-#            if word not in tier3 and isClose(a, word, 1):
-#                tier3.append(word)
-
 if __name__ == "__main__":
     startTime = datetime.now()
     # Array to contain the resulting friend network
