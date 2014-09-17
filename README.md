@@ -13,6 +13,13 @@ social network for any given word, using the word list provided.
 
 At its core, my Levenshtein distance calculator is an implementation of the algorithm described by Michael and Fischer in [this paper](http://dl.acm.org/citation.cfm?doid=321796.321811). The problem does not require reconstruction of edits so I also took advantage of the note made [here](http://en.wikipedia.org/wiki/Levenshtein_distance#Iterative_with_two_matrix_rows) that allows for improved memory use.
 
+### Usage
+
+Run the script from the commandline with the word you want to generate a network for passed as an argument. For example:
+```
+$ python Levenshtein.py knell
+```
+
 ### Modification
 
 My first attempt at creating an effective solution was by simplifying the problem. 
