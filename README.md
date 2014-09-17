@@ -31,7 +31,11 @@ Although not as useful as I had hoped, taking the initial step of eliminating al
 Additionally, I have altered Michael and Fischer's algorithm to better fit its current use. The problem doesn't require us to actually compute Levenshtein distances, just to know whether they are below a certain threshold. Thus, the program stops calculations after this has been determined.
 
 ### Potential Improvements
-There are some minor changes that could be made to improve performance. For example, after creating the initial pool of words within three edits of the input, there's no longer a need to check the length of these words as we know they must be an acceptable length. I have chosen not to do this because it would increase code complexity while providing performance improvements that are neglible for a wordlist of this size.
+There are some minor changes that could be made to improve performance. 
+
+Sorting the wordlist could make ruling out potential friends faster. It would also require reading the entire list into an array.
+
+After creating the initial pool of words within three edits of the input, there's no longer a need to check the length of these words as we know they must be an acceptable length. I have chosen not to do this because it would increase code complexity while providing performance improvements that are neglible for a wordlist of this size.
 
 Currently some words can be returned in multiple locations. For example, if the input word is 'knell', it will be displayed in Tier 2 and as the input. However, words from any given tier will not be shown in the tier immediately above it. This was an arbitrary decision and could easily be altered if the context of the problem made one format more applicable.
 
